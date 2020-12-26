@@ -1,0 +1,19 @@
+Possible api endpoints
+- base: azure app service web app
+- Learners: 
+   - GET: # return: json, format: {'status': code, 'message': '[failure|success]'}
+      - /api/v1/learners/all
+      - /api/v1/learners/student?id=[int] # may not be viable
+      - /api/v1/learners/students?firstname=[string]&lastname=[string]&track=[string]&slackname=[string]
+      - /api/v1/learners/students?slackname=[string]
+      - /api/v1/learners/students?firstname=[string]
+      - /api/v1/learners/students?lastname=[string]
+      - /api/v1/learners/students?track=[string]
+   - POST: # return: json, format: {'status': code, 'message':'[fairlure|success]'}
+      - /api/v1/learners/students # payload is json
+   - DELETE: # return: json, format: {'status': code, 'message':'[fairlure|success]'}
+      - /api/v1/learners/student?slackname=[string]
+      - /api/v1/learners/students?track=[string]
+      - /api/v1/learners/students?firstname=[string]
+   - PUT: # return: json, format: {'status': code, 'message':'[fairlure|success]'}
+      - /api/v1/learners/student?slackname=[string] # payload is json

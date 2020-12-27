@@ -4,8 +4,13 @@ This script runs the FlaskAPI application
 
 from os import environ
 from FlaskAPI import app
+from FlaskAPI.model import db, ma
+import config
 
 if __name__ == '__main__':
+    app.config.from_object("config.Config")
+    db.init_app(app)
+    ma.init_app(app)
     HOST = environ.get('SERVER_HOST', 'localhost')
     try:
         PORT = int(environ.get('SERVER_PORT', '3000'))

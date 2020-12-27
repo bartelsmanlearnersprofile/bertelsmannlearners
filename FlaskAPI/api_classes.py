@@ -1,4 +1,4 @@
-from flask_restful import Resource
+from flask_restful import Resource, reqparse, request
 from flask_httpauth import HTTPBasicAuth
 
 auth = HTTPBasicAuth()

@@ -1,19 +1,25 @@
 Possible api endpoints
 - base: azure app service web app
 - Learners: 
-   - GET: # return: json, format: {'status': code, 'message': '[failure|success]'}
-      - /api/v1.0/learners/all
+   - GET: # return: json, format: {'status': 'success|failure, 'status_code': code, 'data': '[]|[{students_info}]}
+      - /api/v1.0/learners/students
       - /api/v1.0/learners/student?id=[int] # may not be viable
-      - /api/v1.0/learners/students?firstname=[string]&lastname=[string]&track=[string]&slackname=[string]
+      - /api/v1.0/learners/students?firstname=[string]&lastname=[string]&slackname=[string]
       - /api/v1.0/learners/students?slackname=[string]
       - /api/v1.0/learners/students?firstname=[string]
       - /api/v1.0/learners/students?lastname=[string]
-      - /api/v1.0/learners/students?track=[string]
-   - POST: # return: json, format: {'status': code, 'message':'[fairlure|success]'}
+   - POST: # return: json, format: {'status': 'success|failure, 'status_code': code, 'data': '[]|[{students_info}]}
       - /api/v1.0/learners/students # payload is json
-   - DELETE: # return: json, format: {'status': code, 'message':'[fairlure|success]'}
+   - DELETE: # return: json, format: {'status': 'success|failure, 'status_code': code, 'data': '[]|[{students_info}]}
       - /api/v1.0/learners/student?slackname=[string]
-      - /api/v1.0/learners/students?track=[string]
-      - /api/v1.0/learners/students?firstname=[string]
-   - PUT: # return: json, format: {'status': code, 'message':'[fairlure|success]'}
+   - PUT: # return: json, format: {'status': 'success|failure, 'status_code': code, 'data': '[]|[{students_info}]}
       - /api/v1.0/learners/student?slackname=[string] # payload is json
+    
+- Common error HTTP status codes include:
+    - 400 Bad Request – This means that client-side input fails validation.
+    - 401 Unauthorized – This means the user isn’t not authorized to access a resource. It usually returns when the user isn’t authenticated.
+    - 403 Forbidden – This means the user is authenticated, but it’s not allowed to access a resource.
+    - 404 Not Found – This indicates that a resource is not found.
+    - 500 Internal server error – This is a generic server error. It probably shouldn’t be thrown explicitly.
+    - 502 Bad Gateway – This indicates an invalid response from an upstream server.
+    - 503 Service Unavailable – This indicates that something unexpected happened on server side (It can be anything like server overload, some parts of the system failed, etc.).

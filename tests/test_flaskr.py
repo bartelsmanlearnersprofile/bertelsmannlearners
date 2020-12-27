@@ -10,6 +10,9 @@ from FlaskAPI.model import db
 @pytest.fixture
 def client():
     db_fd, app.config['DATABASE'] = tempfile.mkstemp()
+    app.config['SQLALCHEMY_DATABASE_URI'] = app.config.get('DATABASE')
+
+    print(f"Database full path: {app.config.get('SQLALCHEMY_DATABASE_URI')}") # TODO: Remove
     print(f'Database: {app.config.get("DATABASE")}') # TODO: Remove
     print(f'Second field: {db_fd}') # TODO: Remove
     app.config['TESTING'] = config.TestingConfig()

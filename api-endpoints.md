@@ -4,7 +4,7 @@ Possible api endpoints
    - GET: # return: json, format: {'status': 'success|failure, 'status_code': code, 'data': '[]|[{students_info}]}
       - /api/v1.0/learners/students
       - /api/v1.0/learners/student?id=[int] # may not be viable
-      - /api/v1.0/learners/students?firstname=[string]&lastname=[string]&slackname=[string]
+      - /api/v1.0/learners/students?slackname=[string]&firstname=[string]&lastname=[string]
       - /api/v1.0/learners/students?slackname=[string]
       - /api/v1.0/learners/students?firstname=[string]
       - /api/v1.0/learners/students?lastname=[string]

@@ -21,9 +21,26 @@ api.add_resource(LearnerListAPI, '/api/v1.0/learners/students', endpoint='studen
 # default landing page for the api app
 @app.route('/')
 @app.route('/home')
-def Index():
+def index():
     """
     defautl page for app
     :return: home template
     """
     return render_template('home.html')
+
+
+@app.route('/family', methods=['POST'])
+def family(): # TODO: Remove
+    '''
+    :return json data
+    '''
+    data = request.get_json()
+    print(f"Data: {data}")
+    j = []
+    for k in data:
+        name = k["name"]
+        location = k["location"]
+        randomdata = k["randomdata"]
+        j.append({'name': name, 'location': location, 'randomdata': randomdata})
+
+    return jsonify({"result": "success", 'users': j})

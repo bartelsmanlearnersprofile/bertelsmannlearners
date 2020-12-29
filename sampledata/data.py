@@ -15,6 +15,7 @@ class SampleData:
     multiple_return_success_data = {
         "status": "success",
         "status_code": 200,
+        "total": 4,
         "data": [
             {
                 "firstname": "George",
@@ -38,6 +39,13 @@ class SampleData:
             },
         ]
     }
+
+    slacknames = [
+        'udoyen',
+        'nicce',
+        'udoyen1',
+        'mowa'
+    ]
 
     unauthorized = {
         "status": "failure",
@@ -67,25 +75,27 @@ class SampleData:
         "data": []
     }
 
-    user_data = [
-        {
-            "firstname": "George",
-            "lastname": "Udosen",
-            "slackname": "udoyen"
-        },
-        {
-            "firstname": "Kenneth",
-            "lastname": "Udosen",
-            "slackname": "nicce"
-        },
-        {
-            "firstname": "Koo",
-            "lastname": "Udosen",
-            "slackname": "udoyen1"
-        },
-        {
-            "firstname": "David",
-            "lastname": "Ekanem",
-            "slackname": "mowa"
-        },
-    ]
+    user_data = {
+        "data": [
+            {
+                "firstname": "George",
+                "lastname": "Udosen",
+                "slackname": "udoyen"
+            },
+            {
+                "firstname": "Kenneth",
+                "lastname": "Udosen",
+                "slackname": "nicce"
+            },
+            {
+                "firstname": "Koo",
+                "lastname": "Udosen",
+                "slackname": "udoyen1"
+            },
+            {
+                "firstname": "David",
+                "lastname": "Ekanem",
+                "slackname": "mowa"
+            },
+        ]
+    }

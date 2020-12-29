@@ -1,4 +1,7 @@
-from flask_restful import Resource, reqparse, request
+import json
+
+from flask import jsonify
+from flask_restful import Resource, reqparse, request, abort
 from flask_httpauth import HTTPBasicAuth
 from sampledata.data import *
 from FlaskAPI.model import Learner, db, learner_schema
@@ -39,20 +42,52 @@ class LearnerListAPI(Resource):
         super(LearnerListAPI, self).__init__()
 
     def get(self):
-        learners = db.session.query(Learner).all()
-        if len(learners) != 0:
-            learner_list = [learner_schema.dump(learner) for learner in learners]
-            return {
-                'status': 'success',
-                'status_code': 200,
-                'data': learner_list
-            }
+        if request.method == 'GET':
+            try:
+                learners = db.session.query(Learner).all()
+                if len(learners) != 0:
+                    learner_list = [learner_schema.dump(learner) for learner in learners]
+                    return {
+                        'status': 'success',
+                        'status_code': 200,
+                        'data': learner_list
+                    }
+                else:
+                    return {
+                        'status': 'success',
+                        'status_code': 404,
+                        'data': []
+                    }
+            except ValueError:
+                return json.dumps(SampleData.internal_server_error)
         else:
-            return {
-                'status': 'success',
-                'status_code': 404,
-                'data': []
-            }
+            return jsonify(SampleData.bad_gateway)
 
     def post(self):
-        pass
+        if request.method == 'POST':
+            data_load = []
+            response = []
+            try:
+                data = request.get_json()
+                print(f"Data: {data}") # TODO: Remove
+                if data:
+                    data_load = [Learner(slackname=k['slackname'],
+                                         firstname=k['firstname'],
+                                         lastname=k['lastname']) for k in data['data']]
+                    response = [{'slackname': k['slackname'],
+                                 'firstname': k['firstname'],
+                                 'lastname': k['lastname']} for k in data['data']]
+                    print(json.dumps(data_load))
+                    db.session.add_all(data_load)
+                    db.session.commit()
+                    return jsonify({
+                        "status": "success",
+                        "status_code": 200,
+                        "total": len(response),
+                        "data": response
+                    })
+            except ValueError:
+                abort(400)
+                return jsonify(SampleData.bad_request)
+        else:
+            return jsonify(SampleData.bad_gateway)

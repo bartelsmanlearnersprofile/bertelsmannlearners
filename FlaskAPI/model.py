@@ -6,7 +6,7 @@ db = SQLAlchemy()
 ma = Marshmallow()
 
 
-class Learner(db.Model):
+class Learner(db.Model, dict):
     """
     Model class for learners
     """
@@ -17,6 +17,7 @@ class Learner(db.Model):
     lastname = db.Column(db.String(200), nullable=False)
 
     def __init__(self, slackname, firstname, lastname):
+        super().__init__()
         self.slackname = slackname
         self.firstname = firstname
         self.lastname = lastname

@@ -66,18 +66,21 @@ class LearnerListAPI(Resource):
     def post(self):
         if request.method == 'POST':
             data_load = []
-            response = []
             try:
                 data = request.get_json()
-                print(f"Data: {data}") # TODO: Remove
+                print(f"Data: {data}")  # TODO: Remove
                 if data:
-                    data_load = [Learner(slackname=k['slackname'],
-                                         firstname=k['firstname'],
-                                         lastname=k['lastname']) for k in data['data']]
+                    for k in data['data']:
+                        if db.session.query(Learner.slackname).filter(Learner.slackname == k['slackname']).first():
+                            print("Error raised!")
+                            raise ValueError
+                        else:
+                            data_load = [Learner(slackname=k['slackname'],
+                                                 firstname=k['firstname'],
+                                                 lastname=k['lastname']) for k in data['data']]
                     response = [{'slackname': k['slackname'],
                                  'firstname': k['firstname'],
                                  'lastname': k['lastname']} for k in data['data']]
-                    print(json.dumps(data_load))
                     db.session.add_all(data_load)
                     db.session.commit()
                     return jsonify({

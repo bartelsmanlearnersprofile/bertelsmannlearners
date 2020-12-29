@@ -72,7 +72,7 @@ class LearnerListAPI(Resource):
                 if data:
                     for k in data['data']:
                         if db.session.query(Learner.slackname).filter(Learner.slackname == k['slackname']).first():
-                            print("Error raised!")
+                            print("Error raised!") # TODO: Remove
                             raise ValueError
                         else:
                             data_load = [Learner(slackname=k['slackname'],

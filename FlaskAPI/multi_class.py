@@ -49,8 +49,7 @@ class LearnerListAPI(Resource):
                     for k in data['data']:
                         if db.session.query(Learner.slackname).filter(Learner.slackname == k['slackname']).first():
                             print("Error raised!") # TODO: Remove
-                            # abort(400, description="A slack username already exists in the database!")
-                            return SampleData.bad_request
+                            abort(400, reason=SampleData.bad_request)
                         else:
                             data_load = [Learner(slackname=k['slackname'],
                                                  firstname=k['firstname'],

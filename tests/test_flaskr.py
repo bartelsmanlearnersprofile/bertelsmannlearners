@@ -131,9 +131,22 @@ def test_get_single_learner(client):
     :param client: Flask test client
     """
     # with app.app_context():
-    rv = client.get('/api/v1.0/learners/student', query_string={'slackname': 'udoyen'})
+    rv = client.get('/api/v1.0/learners/student/slackname/udoyen')
     print(f"RV: {rv.data}")
-    assert SampleData.single_return_success_data == json.loads(rv.data)
+    assert 200 == rv.status_code
+
+
+# @pytest.mark.skip(reason="testing")
+def test_get_nonexistent_single_learner(client):
+    """
+    Used to test if single learner
+    can be queried
+    :param client: Flask test client
+    """
+    # with app.app_context():
+    rv = client.get('/api/v1.0/learners/student/slackname/man')
+    print(f"RV: {rv.data}")
+    assert SampleData.not_found == json.loads(rv.data)
 
 
 def test_update_learner(client):
@@ -158,7 +171,8 @@ def test_fail_update_for_multiple_learners(client):
     rv = client.put('/api/v1.0/learners/student/update/udoyen',
                     data=json.dumps(SampleData.multiple_user_update_data),
                     headers={"Content-Type": "application/json", "Accept": "application/json"})
-    assert 400 == rv.status_code
+    print(f"rv: {rv.data}")
+    assert SampleData.bad_request == json.loads(rv.data)
     assert rv.content_type == 'application/json'
 
 
@@ -171,6 +185,7 @@ def test_invalid_user_data_update_failure(client):
     rv = client.put('/api/v1.0/learners/student/update/udoyen',
                     data=json.dumps(SampleData.invalid_user_data_update_failure),
                     headers={"Content-Type": "application/json", "Accept": "application/json"})
+    print(f"Response: {rv.data}")
     assert 400 == rv.status_code
     assert rv.content_type == 'application/json'
 

@@ -1,7 +1,4 @@
-import json
-
-from flask import jsonify
-from flask_restful import Resource, reqparse, request, abort
+from flask_restful import Resource, request, abort
 from flask_httpauth import HTTPBasicAuth
 from sqlalchemy.exc import StatementError, InvalidRequestError, OperationalError
 from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
@@ -78,4 +75,6 @@ class LearnerAPI(Resource):
                     db.session.rollback()
                     abort(400)
             except OperationalError:
-                abort(404)
+                abort(500)
+        else:
+            abort(502)

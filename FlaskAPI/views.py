@@ -11,7 +11,7 @@ api = Api(app)
 
 api.add_resource(
     LearnerAPI,
-    '/api/v1.0/learners/student',
+    '/api/v1.0/learners/student/slackname/<string:slackname>',
     '/api/v1.0/learners/student/update/<string:slackname>',
     '/api/v1.0/learners/student/delete/<string:slackname>',
     endpoint='learner')

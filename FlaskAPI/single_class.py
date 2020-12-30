@@ -3,7 +3,7 @@ import json
 from flask import jsonify
 from flask_restful import Resource, reqparse, request, abort
 from flask_httpauth import HTTPBasicAuth
-from sqlalchemy.exc import StatementError, InvalidRequestError
+from sqlalchemy.exc import StatementError, InvalidRequestError, OperationalError
 from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
 
 from sampledata.data import *
@@ -63,4 +63,19 @@ class LearnerAPI(Resource):
             abort(502)
 
     def delete(self, slackname):
-        pass
+        if request.method == 'DELETE':
+            try:
+                remove_learner = db.session.query(Learner).filter(Learner.slackname == slackname).delete()
+                if remove_learner == 1:
+                    check = db.session.query(Learner).filter(Learner.slackname == slackname).one_or_none()
+                    if check is None:
+                        db.session.commit()
+                        return "Success", 200
+                    else:
+                        db.session.rollback()
+                        abort(500)
+                else:
+                    db.session.rollback()
+                    abort(400)
+            except OperationalError:
+                abort(404)

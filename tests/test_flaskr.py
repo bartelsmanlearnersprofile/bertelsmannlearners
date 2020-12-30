@@ -160,4 +160,10 @@ def test_invalid_user_data_update_failure(client):
 
 
 def test_delete_learner(client):
-    pass
+    rv = client.delete('/api/v1.0/learners/student/delete/udoyen')
+    assert 200 == rv.status_code
+
+
+def test_delete_none_existent_learner(client):
+    rv = client.delete('/api/v1.0/learners/student/delete/oyen')
+    assert 400 == rv.status_code

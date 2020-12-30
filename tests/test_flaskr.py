@@ -107,6 +107,12 @@ def test_db_initialization(client):
     assert SampleData.database_initialization_success_return == json.loads(rv.data)
 
 
+def test_get_all_learners(client):
+    rv = client.get('/api/v1.0/learners/students/all')
+
+    print(f"RV: {json.loads(rv.data)}")
+    assert 200 == rv.status_code
+
 # @pytest.mark.skip(reason="Need to test post data addition")
 def test_db_multiple_data_addition(client):
     """

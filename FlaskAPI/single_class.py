@@ -52,8 +52,12 @@ class LearnerAPI(Resource):
                             .update(data['data'][0])
                         db.session.commit()
                     update = db.session.query(Learner).filter(Learner.slackname == slackname).one_or_none()
-                    print(f"Update Info: {dict(update.__dict__)}")  # TODO: Remove
-                    return "Success", 200
+                    print(f"Update Info: {learner_schema.dump(update)}")  # TODO: Remove
+                    return jsonify({
+                        "status": "success",
+                        "status_code": 200,
+                        "data": [learner_schema.dump(update)]
+                    })
                 else:
                     return SampleData.bad_request
             except ValueError:
@@ -74,14 +78,17 @@ class LearnerAPI(Resource):
                     check = db.session.query(Learner).filter(Learner.slackname == slackname).one_or_none()
                     if check is None:
                         db.session.commit()
-                        return "Success", 200
+                        return jsonify({
+                            "status": "success",
+                            "status_code": 200
+                        })
                     else:
                         db.session.rollback()
-                        abort(500)
+                        abort(500, reason=SampleData.internal_server_error)
                 else:
                     db.session.rollback()
-                    abort(400)
+                    abort(400, reason=SampleData.bad_request)
             except OperationalError:
-                abort(500)
+                abort(500, reason=SampleData.internal_server_error)
         else:
-            abort(502)
+            abort(502, reason=SampleData.bad_gateway)

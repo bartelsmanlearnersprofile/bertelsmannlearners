@@ -169,6 +169,7 @@ def test_update_learner(client):
     rv = client.put('/api/v1.0/learners/student/update/udoyen',
                     data=json.dumps(SampleData.user_update_data),
                     headers={"Content-Type": "application/json", "Accept": "application/json"})
+    print(f"RV: {rv.data}")
     assert 200 == rv.status_code
     assert rv.content_type == 'application/json'
 
@@ -208,6 +209,7 @@ def test_delete_learner(client):
     :param client: Flask test client
     """
     rv = client.delete('/api/v1.0/learners/student/delete/udoyen')
+    print(f"RV: {rv.data}")
     assert 200 == rv.status_code
 
 

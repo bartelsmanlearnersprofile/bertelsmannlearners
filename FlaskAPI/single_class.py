@@ -78,4 +78,6 @@ class LearnerAPI(Resource):
                     db.session.rollback()
                     abort(400)
             except OperationalError:
-                abort(404)
+                abort(500)
+        else:
+            abort(502)

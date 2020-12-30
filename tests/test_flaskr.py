@@ -2,9 +2,10 @@ import os
 import json
 import tempfile
 from collections import OrderedDict
-
 import pytest
 from flask import jsonify
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import text
 
 from FlaskAPI import app
 import config
@@ -37,6 +38,52 @@ user_data = {
         ]
     }
 
+_cwd = os.path.dirname(os.path.abspath(__file__))
+
+
+def init_db_from_script(script: str, db: SQLAlchemy) -> bool:
+    """Function to load data into sqlite
+    database
+    Parameters:
+        script (str): path to sql file
+        db (SQLAlchemy): Sqlalchemy object
+    Returns:
+        bool: True if successful and False otherwise
+    """
+    # Create an empty command string
+    sql_command = ''
+    # engine = db.create_engine(script)
+
+    with open(script, 'r') as sql_file:
+        # Iterate over all lines in the sql file
+        for line in sql_file:
+            # Ignore commented lines
+            if not line.startswith('--') and line.strip('\n'):
+                # Append line to the command string
+                sql_command += line.strip('\n')
+
+                # If the command string ends with ';', it is a full statement
+                if sql_command.endswith(';'):
+                    # Try to execute statement and commit it
+                    try:
+                        # noinspection SqlAlchemyUnsafeQuery
+                        db.engine.execute(text(sql_command))
+                        db.session.commit()
+                    # Assert in case of error
+                    except TypeError as t_err:
+                        print("TypeError: {}".format(t_err))
+                        return False
+                    except ValueError as v_err:
+                        print("ValueError: {}".format(v_err))
+                        return False
+                    except Exception as e_err:
+                        print("Exception: {}, {}".format(type(e_err), e_err))
+                        return False
+
+                    # Finally, clear command string
+                    finally:
+                        sql_command = ''
+
 
 @pytest.fixture
 def client():
@@ -53,19 +100,22 @@ def client():
             db.init_app(app)
             db.drop_all()
             db.create_all()
+            db_file = os.path.join(_cwd, 'learners.sql')
+            init_db_from_script(db_file, db)
         yield client
     os.close(db_fd)
     os.unlink(app.config['DATABASE'])
 
 
 # @pytest.mark.skip(reason="Need to test post data addition")
-def test_empty_db(client):
+def test_db_initialization(client):
     """Start with a blank database."""
-    rv = client.get('/api/v1.0/learners/students')
-    assert SampleData.not_found == json.loads(rv.data)
+    rv = client.get('/api/v1.0/learners/students/all')
+    assert SampleData.database_initialization_success_return == json.loads(rv.data)
 
 
-def test_db_data_addition(client):
+# @pytest.mark.skip(reason="Need to test post data addition")
+def test_db_multiple_data_addition(client):
     """
     Used to test data addition to
     database
@@ -78,3 +128,36 @@ def test_db_data_addition(client):
     print(f"RV: {rv.data}") # TODO: Remove
     assert rv.content_type == 'application/json'
     assert SampleData.multiple_return_success_data == json.loads(rv.data)
+
+
+# @pytest.mark.skip(reason="testing")
+def test_get_single_learner(client):
+    # with app.app_context():
+    rv = client.get('/api/v1.0/learners/student', query_string={'slackname': 'udoyen'})
+    print(f"RV: {rv.data}")
+    assert SampleData.single_return_success_data == json.loads(rv.data)
+
+
+def test_update_learner(client):
+    rv = client.put('/api/v1.0/learners/student/update/udoyen',
+                    data=json.dumps(SampleData.user_update_data),
+                    headers={"Content-Type": "application/json", "Accept": "application/json"})
+    assert 200 == rv.status_code
+
+
+def test_fail_update_for_multiple_learners(client):
+    rv = client.put('/api/v1.0/learners/student/update/udoyen',
+                    data=json.dumps(SampleData.multiple_user_update_data),
+                    headers={"Content-Type": "application/json", "Accept": "application/json"})
+    assert 400 == rv.status_code
+
+
+def test_invalid_user_data_update_failure(client):
+    rv = client.put('/api/v1.0/learners/student/update/udoyen',
+                    data=json.dumps(SampleData.invalid_user_data_update_failure),
+                    headers={"Content-Type": "application/json", "Accept": "application/json"})
+    assert 400 == rv.status_code
+
+
+def test_delete_learner(client):
+    pass

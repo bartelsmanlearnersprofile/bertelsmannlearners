@@ -6,11 +6,11 @@ class SampleData:
     single_return_success_data = {
         "status": "success",
         "status_code": 200,
-        "data": {
+        "data": [{
             "firstname": "George",
             "lastname": "Udosen",
             "slackname": "udoyen"
-        }
+        }]
     }
     multiple_return_success_data = {
         "status": "success",
@@ -20,19 +20,50 @@ class SampleData:
             {
                 "firstname": "George",
                 "lastname": "Udosen",
+                "slackname": "udoyen24"
+            },
+            {
+                "firstname": "Kenneth",
+                "lastname": "Udosen",
+                "slackname": "nicce2"
+            },
+            {
+                "firstname": "Koo",
+                "lastname": "Udosen",
+                "slackname": "udoyen11"
+            },
+            {
+                "firstname": "David",
+                "lastname": "Ekanem",
+                "slackname": "mowa2"
+            },
+        ]
+    }
+
+    database_initialization_success_return = {
+        "status": "success",
+        "status_code": 200,
+        "data": [
+            {
+                "id": 1,
+                "firstname": "George",
+                "lastname": "Udosen",
                 "slackname": "udoyen"
             },
             {
+                "id": 2,
                 "firstname": "Kenneth",
                 "lastname": "Udosen",
                 "slackname": "nicce"
             },
             {
+                "id": 3,
                 "firstname": "Koo",
                 "lastname": "Udosen",
                 "slackname": "udoyen1"
             },
             {
+                "id": 4,
                 "firstname": "David",
                 "lastname": "Ekanem",
                 "slackname": "mowa"
@@ -80,22 +111,58 @@ class SampleData:
             {
                 "firstname": "George",
                 "lastname": "Udosen",
-                "slackname": "udoyen"
+                "slackname": "udoyen24"
             },
             {
                 "firstname": "Kenneth",
                 "lastname": "Udosen",
-                "slackname": "nicce"
+                "slackname": "nicce2"
             },
             {
                 "firstname": "Koo",
                 "lastname": "Udosen",
-                "slackname": "udoyen1"
+                "slackname": "udoyen11"
             },
             {
                 "firstname": "David",
                 "lastname": "Ekanem",
-                "slackname": "mowa"
+                "slackname": "mowa2"
             },
         ]
     }
+
+    user_update_data = {
+        'slackname': 'udoyen',
+        'data': [
+            {
+                'firstname': 'Joseph',
+                'lastname': 'Udosen'
+            }
+        ]
+    }
+
+    invalid_user_data_update_failure = {
+        'slackname': 'udoyen',
+        'data': [
+            {
+                'firstname': 'Joseph',
+                'lastname': 'Udosen',
+                'set': 'erw'
+            }
+        ]
+    }
+
+    multiple_user_update_data = {
+        'slackname': 'udoyen',
+        'data': [
+            {
+                'firstname': 'Joseph',
+                'lastname': 'Udosen'
+            },
+            {
+                'firstname': 'Joseph',
+                'lastname': 'Udosen'
+            }
+        ]
+    }
+

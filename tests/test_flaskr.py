@@ -108,6 +108,11 @@ def test_db_initialization(client):
 
 
 def test_get_all_learners(client):
+    """
+    Used to test the get all learners
+    query
+    :param client: Flask test client
+    """
     rv = client.get('/api/v1.0/learners/students/all')
 
     print(f"RV: {json.loads(rv.data)}")

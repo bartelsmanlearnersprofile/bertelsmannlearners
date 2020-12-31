@@ -101,7 +101,7 @@ class SampleData:
         "status_code": 400
     }
     not_found = {
-        "status": "success",
+        "status": "failure",
         "status_code": 404,
         "data": []
     }
@@ -132,7 +132,6 @@ class SampleData:
     }
 
     user_update_data = {
-        'slackname': 'udoyen',
         'data': [
             {
                 'firstname': 'Joseph',

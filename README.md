@@ -41,7 +41,7 @@
          
            > POST :: /students
            > 
-           > Data sent in json format:
+           > Body sent in json format:
          
           ```
            {
@@ -76,6 +76,19 @@
        - Update a learners's information
          
           > PUT :: /student/update/<string:slackname>
+          > Body sent in json format
+         
+            ```
+            {
+                'data': [
+                    {
+                        'firstname': 'Joseph',
+                        'lastname': 'Udosen'
+                    }
+                ]
+            }
+
+            ```
           >
           > Response: Json
          

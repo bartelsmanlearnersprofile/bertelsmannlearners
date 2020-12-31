@@ -31,6 +31,7 @@ class LearnerAPI(Resource):
                             "data": [learner_schema.dump(learner)]
                         })
                     else:
+                        # abort(404)
                         return SampleData.not_found
             except NoResultFound:
                 return SampleData.not_found

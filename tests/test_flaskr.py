@@ -68,9 +68,9 @@ def client():
     db_fd, app.config['DATABASE'] = tempfile.mkstemp(suffix=".db")
     app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{app.config.get('DATABASE')}"
 
-    print(f"Database full path: {app.config.get('SQLALCHEMY_DATABASE_URI')}") # TODO: Remove
-    print(f'Database: {app.config.get("DATABASE")}') # TODO: Remove
-    print(f'Second field: {db_fd}') # TODO: Remove
+    print(f"Database full path: {app.config.get('SQLALCHEMY_DATABASE_URI')}")  # TODO: Remove
+    print(f'Database: {app.config.get("DATABASE")}')  # TODO: Remove
+    print(f'Second field: {db_fd}')  # TODO: Remove
     app.config['TESTING'] = config.TestingConfig()
 
     with app.test_client() as client:
@@ -85,6 +85,7 @@ def client():
     os.unlink(app.config['DATABASE'])
 
 
+# @pytest.mark.skip(reason="testing")
 def test_homepage(client):
     """
     Used to test the home page
@@ -107,6 +108,7 @@ def test_db_initialization(client):
     assert SampleData.database_initialization_success_return == json.loads(rv.data)
 
 
+# @pytest.mark.skip(reason="testing")
 def test_get_all_learners(client):
     """
     Used to test the get all learners
@@ -117,6 +119,7 @@ def test_get_all_learners(client):
 
     print(f"RV: {json.loads(rv.data)}")
     assert 200 == rv.status_code
+
 
 # @pytest.mark.skip(reason="Need to test post data addition")
 def test_db_multiple_data_addition(client):
@@ -129,7 +132,7 @@ def test_db_multiple_data_addition(client):
         rv = client.post('/api/v1.0/learners/students',
                          data=json.dumps(SampleData.user_data),
                          headers={"Content-Type": "application/json", "Accept": "application/json"})
-    print(f"RV: {rv.data}") # TODO: Remove
+    print(f"RV: {rv.data}")  # TODO: Remove
     assert rv.content_type == 'application/json'
     assert SampleData.multiple_return_success_data == json.loads(rv.data)
 
@@ -160,6 +163,7 @@ def test_get_nonexistent_single_learner(client):
     assert SampleData.not_found == json.loads(rv.data)
 
 
+# @pytest.mark.skip(reason="testing")
 def test_update_learner(client):
     """
     Used to test put requests for
@@ -174,6 +178,7 @@ def test_update_learner(client):
     assert rv.content_type == 'application/json'
 
 
+# @pytest.mark.skip(reason="testing")
 def test_fail_update_for_multiple_learners(client):
     """
     Used to test multiple learners insertion
@@ -188,6 +193,7 @@ def test_fail_update_for_multiple_learners(client):
     assert rv.content_type == 'application/json'
 
 
+# @pytest.mark.skip(reason="testing")
 def test_invalid_user_data_update_failure(client):
     """
     Used to test for invalid data in
@@ -202,6 +208,7 @@ def test_invalid_user_data_update_failure(client):
     assert rv.content_type == 'application/json'
 
 
+# @pytest.mark.skip(reason="testing")
 def test_delete_learner(client):
     """
     Used to test the delete method for

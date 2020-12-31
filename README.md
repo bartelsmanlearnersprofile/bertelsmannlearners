@@ -2,7 +2,12 @@
 
 ## Flask API Project
 
+### Notes: The included database file app.db should be deleted before being used.
+
 - purpose: Side project for the bartelsmann udacity scholarship program 2020
+- requirements: 
+  - sqlite3
+  - requirements.txt file contents 
 - Use:
   
   > To be used to store and retrieve learners information from other projects

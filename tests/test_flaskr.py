@@ -85,7 +85,7 @@ def client():
     os.unlink(app.config['DATABASE'])
 
 
-# @pytest.mark.skip(reason="testing")
+@pytest.mark.skip(reason="testing")
 def test_homepage(client):
     """
     Used to test the home page

@@ -1,4 +1,3 @@
-from flask import render_template, request, jsonify
 from flask_cors import CORS
 from flask_restful import Api
 
@@ -21,7 +20,6 @@ api.add_resource(
     '/api/v1.0/learners/students',
     '/api/v1.0/learners/students/all',
     endpoint='students')
-
 
 # default landing page for the api app
 # @app.route('/')

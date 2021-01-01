@@ -1,0 +1,14 @@
+.pytest_cache
+.venv
+
+FlaskAPI/app.db
+
+htmlcov
+
+.coverage
+.env
+.gitignore
+*.md
+config-uswgi.ini
+.git
+discover

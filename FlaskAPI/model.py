@@ -1,6 +1,6 @@
-from marshmallow import Schema, fields, pre_load, validate
-from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
+from flask_sqlalchemy import SQLAlchemy
+from marshmallow import fields
 
 db = SQLAlchemy()
 ma = Marshmallow()

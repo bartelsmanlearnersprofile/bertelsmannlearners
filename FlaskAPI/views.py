@@ -1,8 +1,8 @@
-from flask import Flask, render_template, request, session, logging, jsonify, abort
-from FlaskAPI import app
-from flask_restful import Api
+from flask import render_template, request, jsonify
 from flask_cors import CORS
+from flask_restful import Api
 
+from FlaskAPI import app
 from FlaskAPI.multi_class import LearnerListAPI
 from FlaskAPI.single_class import LearnerAPI
 

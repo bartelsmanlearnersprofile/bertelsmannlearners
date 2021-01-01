@@ -31,19 +31,3 @@ api.add_resource(
 #     """
 #     return render_template('home.html')
 
-
-# @app.route('/family', methods=['POST'])
-# def family():  # TODO: Remove
-#     '''
-#     :return json data
-#     '''
-#     data = request.get_json()
-#     print(f"Data: {data}")
-#     j = []
-#     for k in data:
-#         name = k["name"]
-#         location = k["location"]
-#         randomdata = k["randomdata"]
-#         j.append({'name': name, 'location': location, 'randomdata': randomdata})
-#
-#     return jsonify({"result": "success", 'users': j})

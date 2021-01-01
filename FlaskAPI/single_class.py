@@ -1,11 +1,11 @@
 from flask import jsonify
-from flask_restful import Resource, request, abort
 from flask_httpauth import HTTPBasicAuth
-from sqlalchemy.exc import StatementError, InvalidRequestError, OperationalError
+from flask_restful import Resource, request, abort
+from sqlalchemy.exc import InvalidRequestError, OperationalError
 from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
 
-from sampledata.data import *
 from FlaskAPI.model import Learner, db, learner_schema
+from sampledata.data import *
 
 auth = HTTPBasicAuth()
 
@@ -52,7 +52,8 @@ class LearnerAPI(Resource):
                             .filter(Learner.slackname == slackname) \
                             .update(data['data'][0])
                         db.session.commit()
-                    update = db.session.query(Learner).filter(Learner.slackname == slackname).one_or_none()
+                    update = db.session.query(Learner)\
+                        .filter(Learner.slackname == slackname).one_or_none()
                     print(f"Update Info: {learner_schema.dump(update)}")  # TODO: Remove
                     return jsonify({
                         "status": "success",
@@ -74,9 +75,11 @@ class LearnerAPI(Resource):
     def delete(self, slackname):
         if request.method == 'DELETE':
             try:
-                remove_learner = db.session.query(Learner).filter(Learner.slackname == slackname).delete()
+                remove_learner = db.session.query(Learner)\
+                    .filter(Learner.slackname == slackname).delete()
                 if remove_learner == 1:
-                    check = db.session.query(Learner).filter(Learner.slackname == slackname).one_or_none()
+                    check = db.session.query(Learner)\
+                        .filter(Learner.slackname == slackname).one_or_none()
                     if check is None:
                         db.session.commit()
                         return jsonify({

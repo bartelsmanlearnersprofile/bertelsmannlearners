@@ -1,12 +1,11 @@
 import json
 
 from flask import jsonify
-from flask_restful import Resource, reqparse, request, abort
 from flask_httpauth import HTTPBasicAuth
-from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
+from flask_restful import Resource, request, abort
 
-from sampledata.data import *
 from FlaskAPI.model import Learner, db, learner_schema
+from sampledata.data import *
 
 auth = HTTPBasicAuth()
 
@@ -22,15 +21,17 @@ class LearnerListAPI(Resource):
             try:
                 learners = db.session.query(Learner).all()
                 if len(learners) != 0:
-                    learner_list = [learner_schema.dump(learner) for learner in learners]
+                    learner_list = \
+                        [learner_schema.dump(learner) for learner in learners]
                     return {
                         'status': 'success',
                         'status_code': 200,
+                        'record_count': len(learner_list),
                         'data': learner_list
                     }
                 else:
                     return {
-                        'status': 'success',
+                        'status': 'failure',
                         'status_code': 404,
                         'data': []
                     }
@@ -47,7 +48,8 @@ class LearnerListAPI(Resource):
                 print(f"Data: {data}")  # TODO: Remove
                 if data:
                     for k in data['data']:
-                        if db.session.query(Learner.slackname).filter(Learner.slackname == k['slackname']).first():
+                        if db.session.query(Learner.slackname)\
+                                .filter(Learner.slackname == k['slackname']).first():
                             print("Error raised!") # TODO: Remove
                             abort(400, reason=SampleData.bad_request)
                         else:
@@ -62,7 +64,7 @@ class LearnerListAPI(Resource):
                     return jsonify({
                         "status": "success",
                         "status_code": 200,
-                        "total": len(response),
+                        "record_count": len(response),
                         "data": response
                     })
             except ValueError:

@@ -8,5 +8,6 @@ CREATE TABLE IF NOT EXISTS `learners` (
 );
 
 INSERT INTO `learners` (slackname, firstname, lastname) VALUES ('udoyen', 'George', 'Udosen'),
-    ('nicce', 'Kenneth', 'Udosen'), ('udoyen1', 'Koo', 'Udosen'), ('mowa', 'David', 'Ekanem' );
+    ('nicce', 'Kenneth', 'Udosen'), ('udoyen1', 'Koo', 'Udosen'), ('mowa', 'David', 'Ekanem' ),
+    ('m2', 'David', 'Ekanem' );
 COMMIT;

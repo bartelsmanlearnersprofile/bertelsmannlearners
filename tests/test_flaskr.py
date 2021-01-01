@@ -220,6 +220,7 @@ def test_delete_learner(client):
     assert 200 == rv.status_code
 
 
+# @pytest.mark.skip(reason="testing")
 def test_delete_non_existent_learner(client):
     """
     Used to test for the proper

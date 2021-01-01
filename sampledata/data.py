@@ -15,7 +15,7 @@ class SampleData:
     multiple_return_success_data = {
         "status": "success",
         "status_code": 200,
-        "total": 4,
+        "record_count": 5,
         "data": [
             {
                 "firstname": "George",
@@ -37,12 +37,18 @@ class SampleData:
                 "lastname": "Ekanem",
                 "slackname": "mowa2"
             },
+            {
+                "firstname": "David",
+                "lastname": "Ekanem",
+                "slackname": "m22"
+            }
         ]
     }
 
     database_initialization_success_return = {
         "status": "success",
         "status_code": 200,
+        "record_count": 5,
         "data": [
             {
                 "id": 1,
@@ -68,6 +74,12 @@ class SampleData:
                 "lastname": "Ekanem",
                 "slackname": "mowa"
             },
+            {
+                "id": 5,
+                "firstname": "David",
+                "lastname": "Ekanem",
+                "slackname": "m2"
+            }
         ]
     }
 
@@ -128,6 +140,11 @@ class SampleData:
                 "lastname": "Ekanem",
                 "slackname": "mowa2"
             },
+            {
+                "firstname": "David",
+                "lastname": "Ekanem",
+                "slackname": "m22"
+            }
         ]
     }
 
@@ -164,4 +181,3 @@ class SampleData:
             }
         ]
     }
-

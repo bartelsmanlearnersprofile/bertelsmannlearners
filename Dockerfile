@@ -1,5 +1,5 @@
 # First stage
-FROM python:3.8
+FROM ubuntu:20.04
 
 RUN apt-get update -y && \
     apt-get install -y python3-pip python3-dev
@@ -11,7 +11,7 @@ WORKDIR  /app
 #RUN echo "export PATH=/root/.local:$PATH" >> ~/.bashrc
 
 # Install dependecies
-RUN pip install -r requirements.txt
+RUN pip3 install -r requirements.txt
 
 COPY . /app
 
